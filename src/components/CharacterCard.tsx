@@ -1,22 +1,29 @@
 import React from 'react'
 import { Character } from '../types/character';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View,  } from 'react-native';
 
 interface Props{
     character:Character;
+    onPress: () => void;
 }
 
-
-const CharacterCard = ({character}:Props) => {
-  return (
-    <View style={styles.card}>
-        <Image source={{uri:character.image}} style={styles.image}></Image>
-        <Text style={styles.name}></Text>
-        <Text>{character.species}-{character.status}</Text>
-    </View>
-  )
-}
-
+const CharacterCard = ({ character, navigation }: { character: Character, navigation: any }) => {
+    const handlePress = () => {
+      // Navegar a la pantalla de detalles pasando el personaje como parámetro
+      navigation.navigate('Detalles', { character });
+    };
+  
+    return (
+      <TouchableOpacity onPress={handlePress}>
+        <View style={styles.card}>
+          <Image source={{ uri: character.image }} style={styles.image} />
+          <Text style={styles.name}>{character.name}</Text>
+          <Text>{character.species} - {character.status}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  
 const styles = StyleSheet.create({
     card:{
         marginBottom:10,
